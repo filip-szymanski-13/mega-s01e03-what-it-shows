@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 · two date-entry causes'
 owner: support desk
-status: known
+status: closed
 reviewed: 2026-10-29
 signature: filip-szymanski-13
 ---
@@ -16,6 +16,14 @@ signature: filip-szymanski-13
 
 The desk merged reports about dates into #4471 by subject. The export shows two different
 causes, so the reports need separate engineering tickets.
+
+## Resolution
+
+The course's engineering update records #4471 as closed on 5 October 2026.
+The parser was **fixed** by `fix(dates): parse dd/mm for eu locales`.
+The hint was **won't fix** because the booking-v3 form was retired, not repaired.
+The corresponding GitHub tickets are closed as completed and not planned, respectively.
+The counts below describe the exported incident, not ongoing failures after closure.
 
 The shared parser reads dates month first, while every affected tenant in this export writes
 the day first. Separately, booking-v3 shows a month-first hint even for day-first tenants;
