@@ -1,0 +1,50 @@
+---
+layout: runbook
+title: '#4471 · two date-entry causes'
+owner: support desk
+status: known
+reviewed: 2026-10-29
+signature: filip-szymanski-13
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+The desk merged reports about dates into #4471 by subject. The export shows two different
+causes, so the reports need separate engineering tickets.
+
+The shared parser reads dates month first, while every affected tenant in this export writes
+the day first. Separately, booking-v3 shows a month-first hint even for day-first tenants;
+reports sent through that form follow a different failure path.
+
+<Callout kind="warn">
+One merged ticket does not mean one problem. Use the tenant and channel to distinguish the
+parser failure from the booking-v3 hint failure; the intake tag alone is not reliable.
+</Callout>
+
+## Causes in #4471
+
+<CauseTable ticket={4471} />
+
+The table counts each report ID once, even when the export repeats a row. The desk's five
+one-day notes remain under their tenant-derived cause; they do not form a third group here.
+
+## Engineering tickets
+
+- [Shared parser reads day-first dates as month-first](https://github.com/filip-szymanski-13/mega-s01e03-what-it-shows/issues/1)
+- [booking-v3 hint conflicts with day-first tenant dates](https://github.com/filip-szymanski-13/mega-s01e03-what-it-shows/issues/2)
+
+## Queue history
+
+<QueueTimeline ticket={4471} />
+
+## Triage
+
+- Separate reports by cause, not subject line.
+- Derive the cause from tenant locale and channel, not the intake guess.
+
+<RenderStamp {signature} />
