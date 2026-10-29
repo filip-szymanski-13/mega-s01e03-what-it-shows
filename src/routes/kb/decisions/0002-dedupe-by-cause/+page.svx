@@ -1,0 +1,46 @@
+---
+layout: runbook
+title: '0002: Deduplicate by cause, not subject'
+owner: filip-szymanski-13
+status: accepted
+reviewed: 2026-10-29
+signature: filip-szymanski-13
+---
+
+<script>
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## Context
+
+This decision supersedes [decision 0001](/kb/decisions/0001-dedupe-by-subject).
+The accepted historical record is unchanged. The reports merged into
+[#4471](/kb/incidents/4471) contain both a shared-parser failure and a booking-v3
+hint failure. Similar subjects hid different causes, while different subjects described
+the same cause. Intake tags also disagree with tenant and form evidence.
+
+## Decision
+
+Use the tenant directory and report channel with the existing `causeOf` and `sameCause`
+functions. The tenant locale, not the reporter's browser locale, determines date order.
+For day-first tenants, form reports on booking-v3 belong to the hint cause; other
+channels and booking-v2 belong to the parser cause. Count unique report IDs, not export rows.
+
+Merge only when both reports have the same known cause. Unknown tenants and reports
+without an established cause stay apart pending investigation, even if subjects match.
+Read the body and retain conflicting symptoms as evidence; a tenant-derived classification
+is not proof that every reported symptom has the same mechanism.
+
+## Check the rule
+
+<DedupeExplorer />
+
+## Consequences
+
+The desk keeps one engineering ticket per known cause, with an auditable report count.
+Triage requires a tenant lookup, rather than a subject-only shortcut. Missing metadata
+requires review rather than an automatic merge. Recompute the incident's live tables and
+render the page after data changes; do not copy old counts into standing guidance.
+
+<RenderStamp {signature} />

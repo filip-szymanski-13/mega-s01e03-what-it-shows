@@ -3,12 +3,14 @@ layout: runbook
 title: 'Triage: duplicate reports'
 owner: support desk
 status: accepted
-reviewed: 2024-06-11
+reviewed: 2026-10-29
+signature: filip-szymanski-13
 ---
 
 <script>
   import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
   import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
 </script>
 
 A busy morning brings hundreds of reports about the same thing. We keep one ticket per issue
@@ -16,16 +18,17 @@ and merge every duplicate into it, so engineering sees one thread with a count.
 
 ## The rule
 
-A report is a duplicate when its **subject line matches** the subject of an open ticket
-([decision 0001](/kb/decisions/0001-dedupe-by-subject)):
+A report is a duplicate only when it has the **same known cause** as an existing report
+([decision 0002](/kb/decisions/0002-dedupe-by-cause), superseding decision 0001):
 
-1. lowercase the subject and strip punctuation;
-2. look for an open ticket with the same subject;
-3. found one: merge the report into it. None: open a new ticket.
+1. Look up the tenant's locale and booking form, and check the report channel and body.
+2. Compare causes using `causeOf` and `sameCause`; neither the subject nor the intake tag establishes a cause.
+3. Merge only with the same known cause. Otherwise keep a separate ticket or investigate missing evidence.
+4. Count each report ID once, because export pages can overlap.
 
 <Callout>
-Matching on subject is fast and needs no reading. During an incident that matters more than
-anything else.
+Day-first booking-v3 form reports have a hint mismatch. Other affected day-first reports
+have the shared-parser classification. A matching subject does not make these the same issue.
 </Callout>
 
 ## Try it
@@ -34,4 +37,7 @@ anything else.
 
 ## When you are unsure
 
-Merge. Splitting a ticket later is cheaper than two engineers chasing the same bug.
+Do not merge unknown causes. Keep the report for review, get missing tenant metadata,
+and preserve body evidence that conflicts with the assigned cause.
+
+<RenderStamp {signature} />

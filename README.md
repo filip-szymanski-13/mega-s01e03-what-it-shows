@@ -34,3 +34,18 @@ Support desk. Decision records: whoever signed them.
 ---
 
 Exported 2026-10-04 from the `support` repo, `apps/kb/` → `src/`.
+
+## Challenge deliverables
+
+The signed incident page is `src/routes/kb/incidents/4471/+page.svx`.
+Its rendered snapshot is `rendered/4471.html`, generated from the original Svelte
+components, not a separately typed copy. The `rendered` folder also includes the
+updated triage page, superseding decision 0002, and KB index. These are static
+snapshots; the explorer controls are not hydrated in the saved HTML.
+
+With Node 22.12 or newer, run `npm ci` and `npm run build` to regenerate the
+snapshots. The build checks both cause counts and the incident's computed desk
+reference. Rebuild whenever the export or KB source changes.
+
+Decision 0001 remains unchanged as an accepted historical record. Decision 0002
+replaces its subject-only merge rule, and the active triage page follows that rule.

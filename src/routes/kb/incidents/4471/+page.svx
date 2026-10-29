@@ -28,10 +28,14 @@ parser failure from the booking-v3 hint failure; the intake tag alone is not rel
 
 ## Causes in #4471
 
-<CauseTable ticket={4471} />
+<CauseTable ticket={4471} issueUrls={{
+  parser: 'https://github.com/filip-szymanski-13/mega-s01e03-what-it-shows/issues/1',
+  hint: 'https://github.com/filip-szymanski-13/mega-s01e03-what-it-shows/issues/2',
+}} />
 
-The table counts each report ID once, even when the export repeats a row. The desk's five
-one-day notes remain under their tenant-derived cause; they do not form a third group here.
+The table counts each report ID once, even when the export repeats a row. The desk's
+one-day notes remain under their tenant-derived cause. Their bodies are not proof of a
+day/month swap; keep those notes visible for investigation rather than asserting a new cause.
 
 ## Engineering tickets
 
@@ -46,5 +50,6 @@ one-day notes remain under their tenant-derived cause; they do not form a third 
 
 - Separate reports by cause, not subject line.
 - Derive the cause from tenant locale and channel, not the intake guess.
+- Follow [decision 0002](/kb/decisions/0002-dedupe-by-cause), which replaces the old subject-only rule.
 
 <RenderStamp {signature} />
