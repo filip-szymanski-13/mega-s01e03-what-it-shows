@@ -4,7 +4,7 @@ title: '0002: Deduplicate by cause, not subject'
 owner: filip-szymanski-13
 status: accepted
 reviewed: 2026-10-29
-signature: filip-szymanski-13
+signature: v1.eyJzdWIiOiI0MDI4IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMzMDkwMTgsImV4cCI6MTc5MzM5NTQxOH0.PImrxQH3tPmGsAsMaBj74N55unDHdcwne66ce9ZM3oc
 ---
 
 <script>
